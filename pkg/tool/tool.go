@@ -40,6 +40,7 @@ func Cmd() *cobra.Command {
 	ret.Flags().StringVarP(&cfg.Dir, "dir", "d", ".", "the source directory")
 	ret.Flags().StringArrayVarP(&cfg.BuildFlags, "build", "b", []string{"-mod=mod"},
 		"arguments to pass to the golang build tool")
+	ret.Flags().BoolVarP(&cfg.Tests, "tests", "t", false, "include test code")
 
 	return ret
 }

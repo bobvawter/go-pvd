@@ -38,5 +38,6 @@ Usage:
 Flags:
   -b, --build stringArray   arguments to pass to the golang build tool (default [-mod=mod])
   -d, --dir string          the source directory (default ".")
-  -h, --help                help for pvd
+  -h, --help                help for go-pvd
+  -t, --tests               include test code
 ```
