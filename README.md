@@ -29,6 +29,12 @@ golang.org/x/xerrors                           golang.org/x/xerrors         v0.0
 golang.org/x/xerrors/internal                  golang.org/x/xerrors         v0.0.0-20200804184101-5ec99f83aff1  golang.org/x/xerrors
 ```
 
+# Installing
+
+* You'll need to [download and install](https://golang.org/doc/install) go
+* `go install github.com/bobvawter/go-pvd`
+* Ensure that `$HOME/go/bin` is in your `$PATH`
+
 # Usage
 
 ```
@@ -41,3 +47,5 @@ Flags:
   -h, --help                help for go-pvd
   -t, --tests               include test code
 ```
+
+The package pattern is anything accepted by the usual golang package parser, so `./pkg/foo` will report on packages reachable exactly from foo (relative to the `--dir` flag), and `./pkg/foo/...` would include `foo` and all sub-packages.
