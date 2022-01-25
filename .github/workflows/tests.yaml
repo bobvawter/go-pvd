@@ -1,0 +1,56 @@
+name: Tests
+permissions: read-all
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    name: Build and run ${{ matrix.go-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: [ "1.15", "1.16", "1.17" ]
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - id: go-cache-paths
+        run: |
+          echo "::set-output name=go-build::$(go env GOCACHE)"
+          echo "::set-output name=go-mod::$(go env GOMODCACHE)"
+
+      - uses: actions/checkout@v2
+
+      - name: Go Build Cache
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-${{ matrix.go-version }}-build-${{ hashFiles('**/go.sum') }}
+          path: ${{ steps.go-cache-paths.outputs.go-build }}
+
+      - name: Go Mod Cache
+        uses: actions/cache@v2
+        with:
+          key: ${{ runner.os }}-${{ matrix.go-version }}-mod-${{ hashFiles('**/go.sum') }}
+          path: ${{ steps.go-cache-paths.outputs.go-mod }}
+
+      - name: go generate returns nothing
+        run: |
+          DELTA=$(go generate ./...) || exit 1
+          echo $DELTA
+          test -z "$DELTA"
+
+      - name: Build
+        run: go build .
+
+      - name: Self-check
+        run: ./go-pvd . | tee report.txt
+
+      - name: Upload report
+        uses: actions/upload-artifact@v2
+        with:
+          name: PVD Report go-${{ matrix.go-version }}
+          path: report.txt
