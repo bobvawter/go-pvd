@@ -1,7 +1,10 @@
 # Golang Package Version Dump
 
-This utility will crawl the transitive dependency graph of one or more
-Golang packages to report the module versions used.
+[![Tests](https://github.com/bobvawter/go-pvd/actions/workflows/tests.yaml/badge.svg)](https://github.com/bobvawter/go-pvd/actions/workflows/tests.yaml)
+
+`go-pvd` crawls the transitive dependency graph of one or more Golang packages to report the module
+versions used. This is helpful if you are trying to determine if a CVE in some package imported from
+a module actually impacts your project.
 
 Sample output for pvd itself:
 
@@ -49,4 +52,6 @@ Flags:
   -t, --tests               include test code
 ```
 
-The package pattern is anything accepted by the usual golang package parser, so `./pkg/foo` will report on packages reachable exactly from foo (relative to the `--dir` flag), and `./pkg/foo/...` would include `foo` and all sub-packages.
+The package pattern is anything accepted by the usual golang package parser, so `./pkg/foo` will
+report on packages reachable exactly from foo (relative to the `--dir` flag), and `./pkg/foo/...`
+would include `foo` and all sub-packages.
