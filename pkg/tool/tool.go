@@ -11,6 +11,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// Package tool contains the PVD tool.
 package tool
 
 import (
@@ -26,6 +27,7 @@ import (
 	"golang.org/x/tools/go/packages"
 )
 
+// Cmd returns the main entry point command.
 func Cmd() *cobra.Command {
 	cfg := &packages.Config{
 		Mode: packages.NeedModule | packages.NeedImports,

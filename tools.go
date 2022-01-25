@@ -1,4 +1,4 @@
-// Copyright 2021 The Cockroach Authors.
+// Copyright 2022 The Cockroach Authors.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -11,22 +11,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//go:build tools
+// +build tools
+
 package main
 
 import (
-	"os"
-
-	"github.com/bobvawter/go-pvd/pkg/tool"
+	_ "github.com/cockroachdb/crlfmt"
+	_ "golang.org/x/lint/golint"
+	_ "honnef.co/go/tools/cmd/staticcheck"
 )
-
-//go:generate go run github.com/cockroachdb/crlfmt -w .
-//go:generate go run golang.org/x/lint/golint -set_exit_status ./...
-//go:generate go run honnef.co/go/tools/cmd/staticcheck -checks all ./...
-
-func main() {
-	if err := tool.Cmd().Execute(); err == nil {
-		os.Exit(0)
-	}
-
-	os.Exit(1)
-}
