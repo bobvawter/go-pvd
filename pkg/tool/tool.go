@@ -27,6 +27,21 @@ import (
 	"golang.org/x/tools/go/packages"
 )
 
+//go:generate go run golang.org/x/tools/cmd/stringer -type=Column -trimprefix Column -linecomment
+
+// A Column in the output.
+type Column int
+
+// The names of columns in the output.
+const (
+	Module Column = iota
+	Version
+	Package // Imported package
+	Via     // Via (at least...)
+
+	NumCols = int(Via + 1)
+)
+
 // Cmd returns the main entry point command.
 func Cmd() *cobra.Command {
 	cfg := &packages.Config{
@@ -64,15 +79,33 @@ func exec(ctx context.Context, cfg *packages.Config, pattern []string) error {
 	}
 
 	sort.Slice(out, func(i, j int) bool {
-		return strings.Compare(out[i][0], out[j][0]) < 0
+		if c := strings.Compare(out[i][Module], out[j][Module]); c != 0 {
+			return c < 0
+		}
+		return strings.Compare(out[i][Package], out[j][Package]) < 0
 	})
 
 	tw := tabwriter.NewWriter(os.Stdout, 2, 8, 2, ' ', 0)
-	fmt.Fprintln(tw, "Package\tModule\tVersion\tVia (at least...)")
+	for i := 0; i < NumCols; i++ {
+		if i > 0 {
+			fmt.Fprint(tw, "\t")
+		}
+		fmt.Fprint(tw, Column(i).String())
+	}
+	fmt.Fprintln(tw)
+
+	// Elide duplicate values in the first N many columns.
+	var dedup [2]string
 	for _, data := range out {
 		for idx := range data {
 			if idx > 0 {
 				fmt.Fprint(tw, "\t")
+			}
+			if idx < len(dedup) {
+				if dedup[idx] == data[idx] {
+					continue
+				}
+				dedup[idx] = data[idx]
 			}
 			fmt.Fprint(tw, data[idx])
 		}
@@ -90,7 +123,7 @@ func crawl(pkg, via *packages.Package, seen map[string]bool, out [][]string) [][
 	seen[pkg.ID] = true
 
 	if mod := pkg.Module; mod != nil {
-		line := []string{pkg.ID, pkg.Module.Path, pkg.Module.Version}
+		line := append(make([]string, 0, NumCols), pkg.Module.Path, pkg.Module.Version, pkg.ID)
 		if pkg == via {
 			line = append(line, "Main")
 		} else {

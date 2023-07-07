@@ -10,34 +10,34 @@ Sample output for pvd itself:
 
 ```
 % go-pvd .
-Package                                        Module                       Version  Via (at least...)
-github.com/bobvawter/go-pvd                    github.com/bobvawter/go-pvd           Main
-github.com/bobvawter/go-pvd/pkg/tool           github.com/bobvawter/go-pvd           github.com/bobvawter/go-pvd
-github.com/spf13/cobra                         github.com/spf13/cobra       v1.7.0   github.com/bobvawter/go-pvd/pkg/tool
-github.com/spf13/pflag                         github.com/spf13/pflag       v1.0.5   github.com/spf13/cobra
-golang.org/x/mod/semver                        golang.org/x/mod             v0.10.0  golang.org/x/tools/internal/gocommand
-golang.org/x/sys/execabs                       golang.org/x/sys             v0.8.0   golang.org/x/tools/internal/gocommand
-golang.org/x/tools/go/gcexportdata             golang.org/x/tools           v0.9.1   golang.org/x/tools/go/packages
-golang.org/x/tools/go/internal/packagesdriver  golang.org/x/tools           v0.9.1   golang.org/x/tools/go/packages
-golang.org/x/tools/go/packages                 golang.org/x/tools           v0.9.1   github.com/bobvawter/go-pvd/pkg/tool
-golang.org/x/tools/go/types/objectpath         golang.org/x/tools           v0.9.1   golang.org/x/tools/internal/typesinternal
-golang.org/x/tools/internal/event              golang.org/x/tools           v0.9.1   golang.org/x/tools/internal/gocommand
-golang.org/x/tools/internal/event/core         golang.org/x/tools           v0.9.1   golang.org/x/tools/internal/event
-golang.org/x/tools/internal/event/keys         golang.org/x/tools           v0.9.1   golang.org/x/tools/internal/event/core
-golang.org/x/tools/internal/event/label        golang.org/x/tools           v0.9.1   golang.org/x/tools/internal/event/keys
-golang.org/x/tools/internal/gcimporter         golang.org/x/tools           v0.9.1   golang.org/x/tools/go/gcexportdata
-golang.org/x/tools/internal/gocommand          golang.org/x/tools           v0.9.1   golang.org/x/tools/internal/packagesinternal
-golang.org/x/tools/internal/packagesinternal   golang.org/x/tools           v0.9.1   golang.org/x/tools/go/packages
-golang.org/x/tools/internal/pkgbits            golang.org/x/tools           v0.9.1   golang.org/x/tools/internal/gcimporter
-golang.org/x/tools/internal/tokeninternal      golang.org/x/tools           v0.9.1   golang.org/x/tools/internal/gcimporter
-golang.org/x/tools/internal/typeparams         golang.org/x/tools           v0.9.1   golang.org/x/tools/go/packages
-golang.org/x/tools/internal/typesinternal      golang.org/x/tools           v0.9.1   golang.org/x/tools/go/packages
+Module                       Version  Imported package                               Via (at least...)
+github.com/bobvawter/go-pvd           github.com/bobvawter/go-pvd                    Main
+                                      github.com/bobvawter/go-pvd/pkg/tool           github.com/bobvawter/go-pvd
+github.com/spf13/cobra       v1.7.0   github.com/spf13/cobra                         github.com/bobvawter/go-pvd/pkg/tool
+github.com/spf13/pflag       v1.0.5   github.com/spf13/pflag                         github.com/spf13/cobra
+golang.org/x/mod             v0.12.0  golang.org/x/mod/semver                        golang.org/x/tools/internal/gocommand
+golang.org/x/sys             v0.10.0  golang.org/x/sys/execabs                       golang.org/x/tools/go/packages
+golang.org/x/tools           v0.11.0  golang.org/x/tools/go/gcexportdata             golang.org/x/tools/go/packages
+                                      golang.org/x/tools/go/internal/packagesdriver  golang.org/x/tools/go/packages
+                                      golang.org/x/tools/go/packages                 github.com/bobvawter/go-pvd/pkg/tool
+                                      golang.org/x/tools/internal/event              golang.org/x/tools/internal/gocommand
+                                      golang.org/x/tools/internal/event/core         golang.org/x/tools/internal/event
+                                      golang.org/x/tools/internal/event/keys         golang.org/x/tools/internal/gocommand
+                                      golang.org/x/tools/internal/event/label        golang.org/x/tools/internal/event/keys
+                                      golang.org/x/tools/internal/event/tag          golang.org/x/tools/internal/gocommand
+                                      golang.org/x/tools/internal/gcimporter         golang.org/x/tools/go/gcexportdata
+                                      golang.org/x/tools/internal/gocommand          golang.org/x/tools/internal/packagesinternal
+                                      golang.org/x/tools/internal/packagesinternal   golang.org/x/tools/go/packages
+                                      golang.org/x/tools/internal/pkgbits            golang.org/x/tools/internal/gcimporter
+                                      golang.org/x/tools/internal/tokeninternal      golang.org/x/tools/internal/gcimporter
+                                      golang.org/x/tools/internal/typeparams         golang.org/x/tools/go/packages
+                                      golang.org/x/tools/internal/typesinternal      golang.org/x/tools/go/packages
 ```
 
 # Installing
 
 * You'll need to [download and install](https://golang.org/doc/install) go
-* `go install github.com/bobvawter/go-pvd`
+* `go install github.com/bobvawter/go-pvd@latest`
 * Ensure that `$HOME/go/bin` is in your `$PATH`
 
 # Usage
